@@ -1,5 +1,7 @@
 /* eslint-disable indent */
 // Use this hook to manipulate incoming or outgoing data.
+
+
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
 
@@ -25,6 +27,11 @@ include:[
     as:'type'
   }
 ],
+
+  //search functionality
+bookName:{
+  $regexp: `%${context.params?.query?.search}%`,
+},
 raw:false
 };
 

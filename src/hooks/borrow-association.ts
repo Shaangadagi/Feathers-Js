@@ -3,6 +3,8 @@
 
 
 
+import { Op } from 'sequelize';
+
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
 
@@ -15,7 +17,8 @@ export default (options = {}): Hook => {
       attributes: ['id', 'takenDate', 'broughtDate'],
       include: [{
         model: students,
-        attributes: ['name', 'surName', 'birthDate', 'gender', 'class', 'point']
+        attributes: ['name', 'surName', 'birthDate', 'gender', 'class', 'point'],
+
       }, {
         model: books,
         attributes: ['bookName', 'pageCount', 'point'],
@@ -36,6 +39,11 @@ export default (options = {}): Hook => {
 
 
       ],
+
+      //search functionality
+      studentId:{
+        [Op.iLike]: `%${context.params?.query?.search}%`,
+      },
       raw: false
     };
     return context;
